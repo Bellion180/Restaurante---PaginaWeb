@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Sabores del Valle</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo-section">
+                <img id="restaurant-logo" src="/placeholder.svg?height=50&width=50" alt="Logo" class="logo">
+                <h1 id="restaurant-name" class="restaurant-name">Sabores del Valle</h1>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="menu.html">Menú</a></li>
+                    <li><a href="offers.html">Ofertas</a></li>
+                    <li><a href="#" onclick="logout()">Cerrar Sesión</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <div class="container">
+            <h1>Panel de Administración</h1>
+            
+            <div class="admin-sections">
+                <div class="admin-section">
+                    <h2>Información del Restaurante</h2>
+                    <form id="restaurant-form">
+                        <div class="form-group">
+                            <label for="admin-restaurant-name">Nombre del Restaurante:</label>
+                            <input type="text" id="admin-restaurant-name" name="restaurant-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="admin-restaurant-logo">URL del Logo:</label>
+                            <input type="url" id="admin-restaurant-logo" name="restaurant-logo" placeholder="https://ejemplo.com/logo.png">
+                        </div>
+                        <div class="form-group">
+                            <label for="admin-restaurant-description">Descripción del Restaurante:</label>
+                            <textarea id="admin-restaurant-description" name="restaurant-description" rows="5"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Actualizar Información</button>
+                    </form>
+                </div>
+
+                <div class="admin-section">
+                    <h2>Descripción del Menú</h2>
+                    <form id="menu-form">
+                        <div class="form-group">
+                            <label for="admin-menu-description">Descripción del Menú:</label>
+                            <textarea id="admin-menu-description" name="menu-description" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Actualizar Menú</button>
+                    </form>
+                </div>
+
+                <div class="admin-section">
+                    <h2>Vista Previa</h2>
+                    <div class="preview-section">
+                        <div class="preview-item">
+                            <strong>Nombre:</strong> <span id="preview-name">Sabores del Valle</span>
+                        </div>
+                        <div class="preview-item">
+                            <strong>Logo:</strong> <img id="preview-logo" src="/placeholder.svg?height=30&width=30" alt="Logo Preview" style="height: 30px; width: 30px;">
+                        </div>
+                        <div class="preview-item">
+                            <strong>Descripción:</strong> <span id="preview-description">Descripción actual del restaurante...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-section">
+                    <h2>Usuarios Registrados</h2>
+                    <div id="users-list" class="users-list">
+                        <!-- Los usuarios se cargarán aquí dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 <span id="footer-name">Sabores del Valle</span>. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

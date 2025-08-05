@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Sabores del Valle</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header con navegación -->
+    <header class="header">
+        <div class="container">
+            <div class="logo-section">
+                <img id="restaurant-logo" src="/placeholder.svg?height=50&width=50" alt="Logo" class="logo">
+                <h1 id="restaurant-name" class="restaurant-name">Sabores del Valle</h1>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="menu.html">Menú</a></li>
+                    <li><a href="offers.html">Ofertas</a></li>
+                    <li><a href="login.html">Iniciar Sesión</a></li>
+                    <li><a href="register.html">Registro</a></li>
+                    <li id="admin-link" style="display: none;"><a href="admin.html">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Bienvenidos a una experiencia culinaria única</h2>
+            <p>Descubre los sabores auténticos en cada platillo</p>
+        </div>
+    </section>
+
+    <!-- Platillos del día - Carrusel -->
+    <section class="daily-dishes">
+        <div class="container">
+            <h2>Platillos del Día</h2>
+            <div class="carousel-container">
+                <div class="carousel" id="dishes-carousel">
+                    <div class="dish-card active">
+                        <img src="/placeholder.svg?height=200&width=300" alt="Paella Valenciana">
+                        <h3>Paella Valenciana</h3>
+                        <p>Arroz con mariscos frescos y azafrán</p>
+                        <span class="price">$18.99</span>
+                    </div>
+                    <div class="dish-card">
+                        <img src="/placeholder.svg?height=200&width=300" alt="Salmón a la Plancha">
+                        <h3>Salmón a la Plancha</h3>
+                        <p>Con vegetales asados y salsa de limón</p>
+                        <span class="price">$22.50</span>
+                    </div>
+                    <div class="dish-card">
+                        <img src="/placeholder.svg?height=200&width=300" alt="Risotto de Hongos">
+                        <h3>Risotto de Hongos</h3>
+                        <p>Cremoso risotto con hongos porcini</p>
+                        <span class="price">$16.75</span>
+                    </div>
+                </div>
+                <button class="carousel-btn prev" onclick="prevSlide()">‹</button>
+                <button class="carousel-btn next" onclick="nextSlide()">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ofertas del día -->
+    <section class="daily-offers">
+        <div class="container">
+            <h2>Ofertas Especiales</h2>
+            <div class="offers-grid">
+                <div class="offer-card">
+                    <h3>Menú Ejecutivo</h3>
+                    <p>Entrada + Plato Principal + Postre</p>
+                    <div class="price-section">
+                        <span class="old-price">$25.00</span>
+                        <span class="new-price">$19.99</span>
+                    </div>
+                </div>
+                <div class="offer-card">
+                    <h3>Happy Hour</h3>
+                    <p>2x1 en bebidas de 5:00 PM a 7:00 PM</p>
+                    <div class="price-section">
+                        <span class="new-price">¡Aprovecha!</span>
+                    </div>
+                </div>
+                <div class="offer-card">
+                    <h3>Cena Romántica</h3>
+                    <p>Para dos personas con vino incluido</p>
+                    <div class="price-section">
+                        <span class="old-price">$60.00</span>
+                        <span class="new-price">$45.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Información del restaurante -->
+    <section class="about">
+        <div class="container">
+            <h2>Sobre Nosotros</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p id="restaurant-description">
+                        En Sabores del Valle, nos dedicamos a ofrecer una experiencia gastronómica excepcional. 
+                        Nuestros chefs utilizan ingredientes frescos y locales para crear platillos que despiertan 
+                        todos los sentidos. Con más de 15 años de experiencia, hemos perfeccionado el arte de 
+                        combinar tradición e innovación en cada plato.
+                    </p>
+                    <div class="restaurant-info">
+                        <div class="info-item">
+                            <strong>Horarios:</strong>
+                            <p>Lunes a Domingo: 12:00 PM - 11:00 PM</p>
+                        </div>
+                        <div class="info-item">
+                            <strong>Ubicación:</strong>
+                            <p>Av. Principal 123, Centro de la Ciudad</p>
+                        </div>
+                        <div class="info-item">
+                            <strong>Teléfono:</strong>
+                            <p>(555) 123-4567</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="/placeholder.svg?height=300&width=400" alt="Interior del restaurante">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 <span id="footer-name">Sabores del Valle</span>. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

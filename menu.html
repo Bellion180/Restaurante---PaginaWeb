@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú - Sabores del Valle</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo-section">
+                <img id="restaurant-logo" src="/placeholder.svg?height=50&width=50" alt="Logo" class="logo">
+                <h1 id="restaurant-name" class="restaurant-name">Sabores del Valle</h1>
+            </div>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="offers.html">Ofertas</a></li>
+                    <li><a href="login.html">Iniciar Sesión</a></li>
+                    <li><a href="register.html">Registro</a></li>
+                    <li id="admin-link" style="display: none;"><a href="admin.html">Admin</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="menu-main">
+        <div class="container">
+            <h1>Nuestro Menú</h1>
+            <p id="menu-description" class="menu-description">
+                Descubre nuestra selección de platillos preparados con ingredientes frescos y técnicas culinarias tradicionales.
+            </p>
+
+            <div class="menu-categories">
+                <div class="menu-category">
+                    <h2>Entradas</h2>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h3>Bruschetta Mediterránea</h3>
+                                <p>Pan tostado con tomate, albahaca y mozzarella fresca</p>
+                            </div>
+                            <span class="price">$8.50</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h3>Carpaccio de Res</h3>
+                                <p>Finas láminas de res con rúcula y parmesano</p>
+                            </div>
+                            <span class="price">$12.75</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h3>Ceviche de Camarones</h3>
+                                <p>Camarones frescos marinados en limón con cilantro</p>
+                            </div>
+                            <span class="price">$14.25</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-category">
+                    <h2>Platos Principales</h2>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h3>Filete de Res a la Parrilla</h3>
+                                <p>Acompañado de papas asadas y vegetales de temporada</p>
+                            </div>
+                            <span class="price">$28.90</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h3>Salmón en Costra de Hierbas</h3>
+                                <p>Con puré de coliflor y salsa de mantequilla al limón</p>
+                            </div>
+                            <span class="price">$24.50</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h3>Paella Valenciana</h3>
+                                <p>Arroz con mariscos, pollo y azafrán (para 2 personas)</p>
+                            </div>
+                            <span class="price">$35.00</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h3>Lasaña de la Casa</h3>
+                                <p>Con carne, bechamel y quesos gratinados</p>
+                            </div>
+                            <span class="price">$18.75</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-category">
+                    <h2>Postres</h2>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h3>Tiramisú Clásico</h3>
+                                <p>Con café espresso y mascarpone</p>
+                            </div>
+                            <span class="price">$7.50</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h3>Cheesecake de Frutos Rojos</h3>
+                                <p>Con salsa de fresas y arándanos</p>
+                            </div>
+                            <span class="price">$8.25</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h3>Flan de Vainilla</h3>
+                                <p>Tradicional flan casero con caramelo</p>
+                            </div>
+                            <span class="price">$6.75</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-category">
+                    <h2>Bebidas</h2>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h3>Vinos de la Casa</h3>
+                                <p>Selección de vinos tintos y blancos</p>
+                            </div>
+                            <span class="price">$6.00 - $15.00</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h3>Cócteles Especiales</h3>
+                                <p>Mojito, Margarita, Pisco Sour</p>
+                            </div>
+                            <span class="price">$8.50</span>
+                        </div>
+                        <div class="menu-item">
+                            <div class="item-info">
+                                <h3>Jugos Naturales</h3>
+                                <p>Naranja, mango, maracuyá</p>
+                            </div>
+                            <span class="price">$4.50</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 <span id="footer-name">Sabores del Valle</span>. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
