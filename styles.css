@@ -733,3 +733,348 @@ body {
         padding: 25px;
     }
 }
+
+/* Gestión del menú en el panel de administración */
+.menu-management {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.menu-categories-section, .menu-items-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.menu-categories-section h3, .menu-items-section h3 {
+    color: #d4a574;
+    font-size: 1.3rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+    border-bottom: 2px solid #d4a574;
+    padding-bottom: 8px;
+}
+
+.add-category-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.add-category-form input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.add-category-form input:focus {
+    outline: none;
+    border-color: #28a745;
+}
+
+.btn-add-category {
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.btn-add-category:hover {
+    background: #218838;
+    transform: translateY(-1px);
+}
+
+.btn-add-category::before {
+    content: "+";
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.btn-add-dish {
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 15px 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin: 20px 0;
+    box-shadow: 0 3px 10px rgba(40, 167, 69, 0.3);
+}
+
+.btn-add-dish:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+.btn-add-dish::before {
+    content: "+";
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.add-dish-button-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.no-dishes {
+    text-align: center;
+    padding: 40px 20px;
+    background: white;
+    border-radius: 10px;
+    border: 2px dashed #dee2e6;
+    margin-bottom: 20px;
+}
+
+.no-dishes p {
+    color: #6c757d;
+    font-style: italic;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+/* Íconos para botones */
+.btn-edit::before {
+    content: "✏️";
+    margin-right: 4px;
+}
+
+.btn-delete::before {
+    content: "−";
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+.btn-add::before {
+    content: "+";
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+/* Efectos especiales para los botones */
+.btn-small:active {
+    transform: translateY(1px);
+}
+
+.btn-small:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+}
+
+.categories-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.category-item {
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border-left: 4px solid #d4a574;
+    transition: all 0.3s ease;
+}
+
+.category-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.category-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.category-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-small {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 35px;
+    height: 35px;
+    transition: all 0.3s ease;
+}
+
+.btn-edit {
+    background: #ffc107;
+    color: #333;
+}
+
+.btn-edit:hover {
+    background: #e0a800;
+    transform: translateY(-1px);
+}
+
+.btn-delete {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+.btn-add {
+    background: #28a745;
+    color: white;
+}
+
+.btn-add:hover {
+    background: #218838;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #5a6268;
+}
+
+.category-selector {
+    margin-bottom: 20px;
+}
+
+.category-selector select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    background: white;
+}
+
+.add-dish-form {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 1px solid #dee2e6;
+}
+
+.add-dish-form h4 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.2rem;
+}
+
+.dishes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dish-item {
+    background: white;
+    padding: 18px;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border-left: 4px solid #28a745;
+    transition: all 0.3s ease;
+}
+
+.dish-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.dish-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.dish-info h4 {
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.dish-info p {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.dish-price {
+    font-weight: 600;
+    color: #d4a574;
+}
+
+.dish-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Responsive para gestión del menú */
+@media (max-width: 768px) {
+    .menu-management {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .add-category-form {
+        flex-direction: column;
+    }
+    
+    .category-item, .dish-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .category-actions, .dish-actions {
+        align-self: stretch;
+        justify-content: center;
+    }
+}

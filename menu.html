@@ -32,121 +32,8 @@
                 Descubre nuestra selección de platillos preparados con ingredientes frescos y técnicas culinarias tradicionales.
             </p>
 
-            <div class="menu-categories">
-                <div class="menu-category">
-                    <h2>Entradas</h2>
-                    <div class="menu-items">
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <h3>Bruschetta Mediterránea</h3>
-                                <p>Pan tostado con tomate, albahaca y mozzarella fresca</p>
-                            </div>
-                            <span class="price">$8.50</span>
-                        </div>
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <h3>Carpaccio de Res</h3>
-                                <p>Finas láminas de res con rúcula y parmesano</p>
-                            </div>
-                            <span class="price">$12.75</span>
-                        </div>
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <h3>Ceviche de Camarones</h3>
-                                <p>Camarones frescos marinados en limón con cilantro</p>
-                            </div>
-                            <span class="price">$14.25</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="menu-category">
-                    <h2>Platos Principales</h2>
-                    <div class="menu-items">
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <h3>Filete de Res a la Parrilla</h3>
-                                <p>Acompañado de papas asadas y vegetales de temporada</p>
-                            </div>
-                            <span class="price">$28.90</span>
-                        </div>
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <h3>Salmón en Costra de Hierbas</h3>
-                                <p>Con puré de coliflor y salsa de mantequilla al limón</p>
-                            </div>
-                            <span class="price">$24.50</span>
-                        </div>
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <h3>Paella Valenciana</h3>
-                                <p>Arroz con mariscos, pollo y azafrán (para 2 personas)</p>
-                            </div>
-                            <span class="price">$35.00</span>
-                        </div>
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <h3>Lasaña de la Casa</h3>
-                                <p>Con carne, bechamel y quesos gratinados</p>
-                            </div>
-                            <span class="price">$18.75</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="menu-category">
-                    <h2>Postres</h2>
-                    <div class="menu-items">
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <h3>Tiramisú Clásico</h3>
-                                <p>Con café espresso y mascarpone</p>
-                            </div>
-                            <span class="price">$7.50</span>
-                        </div>
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <h3>Cheesecake de Frutos Rojos</h3>
-                                <p>Con salsa de fresas y arándanos</p>
-                            </div>
-                            <span class="price">$8.25</span>
-                        </div>
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <h3>Flan de Vainilla</h3>
-                                <p>Tradicional flan casero con caramelo</p>
-                            </div>
-                            <span class="price">$6.75</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="menu-category">
-                    <h2>Bebidas</h2>
-                    <div class="menu-items">
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <h3>Vinos de la Casa</h3>
-                                <p>Selección de vinos tintos y blancos</p>
-                            </div>
-                            <span class="price">$6.00 - $15.00</span>
-                        </div>
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <h3>Cócteles Especiales</h3>
-                                <p>Mojito, Margarita, Pisco Sour</p>
-                            </div>
-                            <span class="price">$8.50</span>
-                        </div>
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <h3>Jugos Naturales</h3>
-                                <p>Naranja, mango, maracuyá</p>
-                            </div>
-                            <span class="price">$4.50</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="menu-categories" id="menu-categories">
+                <!-- Las categorías se cargarán dinámicamente desde JavaScript -->
             </div>
         </div>
     </main>
@@ -158,5 +45,111 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // Cargar menú dinámicamente
+        function loadDynamicMenu() {
+            const menuData = JSON.parse(localStorage.getItem('menuData')) || getDefaultMenuData();
+            const menuCategories = document.getElementById('menu-categories');
+            
+            menuCategories.innerHTML = Object.entries(menuData).map(([categoryName, dishes]) => `
+                <div class="menu-category">
+                    <h2>${categoryName}</h2>
+                    <div class="menu-items">
+                        ${dishes.map(dish => `
+                            <div class="menu-item">
+                                <div class="item-info">
+                                    <h3>${dish.name}</h3>
+                                    <p>${dish.description}</p>
+                                </div>
+                                <span class="price">${dish.price}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Datos por defecto del menú
+        function getDefaultMenuData() {
+            return {
+                "Entradas": [
+                    {
+                        "name": "Bruschetta Mediterránea",
+                        "description": "Pan tostado con tomate, albahaca y mozzarella fresca",
+                        "price": "$8.50"
+                    },
+                    {
+                        "name": "Carpaccio de Res",
+                        "description": "Finas láminas de res con rúcula y parmesano",
+                        "price": "$12.75"
+                    },
+                    {
+                        "name": "Ceviche de Camarones",
+                        "description": "Camarones frescos marinados en limón con cilantro",
+                        "price": "$14.25"
+                    }
+                ],
+                "Platos Principales": [
+                    {
+                        "name": "Filete de Res a la Parrilla",
+                        "description": "Acompañado de papas asadas y vegetales de temporada",
+                        "price": "$28.90"
+                    },
+                    {
+                        "name": "Salmón en Costra de Hierbas",
+                        "description": "Con puré de coliflor y salsa de mantequilla al limón",
+                        "price": "$24.50"
+                    },
+                    {
+                        "name": "Paella Valenciana",
+                        "description": "Arroz con mariscos, pollo y azafrán (para 2 personas)",
+                        "price": "$35.00"
+                    },
+                    {
+                        "name": "Lasaña de la Casa",
+                        "description": "Con carne, bechamel y quesos gratinados",
+                        "price": "$18.75"
+                    }
+                ],
+                "Postres": [
+                    {
+                        "name": "Tiramisú Clásico",
+                        "description": "Con café espresso y mascarpone",
+                        "price": "$7.50"
+                    },
+                    {
+                        "name": "Cheesecake de Frutos Rojos",
+                        "description": "Con salsa de fresas y arándanos",
+                        "price": "$8.25"
+                    },
+                    {
+                        "name": "Flan de Vainilla",
+                        "description": "Tradicional flan casero con caramelo",
+                        "price": "$6.75"
+                    }
+                ],
+                "Bebidas": [
+                    {
+                        "name": "Vinos de la Casa",
+                        "description": "Selección de vinos tintos y blancos",
+                        "price": "$6.00 - $15.00"
+                    },
+                    {
+                        "name": "Cócteles Especiales",
+                        "description": "Mojito, Margarita, Pisco Sour",
+                        "price": "$8.50"
+                    },
+                    {
+                        "name": "Jugos Naturales",
+                        "description": "Naranja, mango, maracuyá",
+                        "price": "$4.50"
+                    }
+                ]
+            };
+        }
+        
+        // Cargar el menú cuando se carga la página
+        document.addEventListener('DOMContentLoaded', loadDynamicMenu);
+    </script>
 </body>
 </html>

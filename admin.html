@@ -75,6 +75,58 @@
                 </div>
 
                 <div class="admin-section">
+                    <h2>Gestión del Menú</h2>
+                    <div class="menu-management">
+                        <div class="menu-categories-section">
+                            <h3>Categorías de Comida</h3>
+                            <div class="add-category-form">
+                                <input type="text" id="new-category-name" placeholder="Nombre de la nueva categoría">
+                                <button type="button" class="btn-add-category" onclick="addCategory()">Agregar</button>
+                            </div>
+                            <div id="categories-list" class="categories-list">
+                                <!-- Las categorías se cargarán aquí dinámicamente -->
+                            </div>
+                        </div>
+                        
+                        <div class="menu-items-section">
+                            <h3>Platillos</h3>
+                            <div class="category-selector">
+                                <label for="selected-category">Categoría:</label>
+                                <select id="selected-category" onchange="loadDishesForCategory()">
+                                    <option value="">Selecciona una categoría</option>
+                                </select>
+                            </div>
+                            
+                            <div id="dishes-list" class="dishes-list">
+                                <!-- Los platillos se cargarán aquí dinámicamente -->
+                            </div>
+                            
+                            <div id="add-dish-button-container" style="display: none;" class="add-dish-button-container">
+                                <button type="button" class="btn-add-dish" onclick="showAddDishForm()">Agregar Platillo</button>
+                            </div>
+                            
+                            <div class="add-dish-form" id="add-dish-form" style="display: none;">
+                                <h4>Agregar Platillo</h4>
+                                <div class="form-group">
+                                    <label for="dish-name">Nombre del platillo:</label>
+                                    <input type="text" id="dish-name" placeholder="Ej: Pasta Alfredo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dish-description">Descripción:</label>
+                                    <textarea id="dish-description" placeholder="Descripción del platillo" rows="2"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="dish-price">Precio:</label>
+                                    <input type="text" id="dish-price" placeholder="Ej: $15.50">
+                                </div>
+                                <button type="button" class="btn-add" onclick="addDish()">Agregar</button>
+                                <button type="button" class="btn-secondary" onclick="cancelEditDish()">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="admin-section">
                     <h2>Usuarios Registrados</h2>
                     <div id="users-list" class="users-list">
                         <!-- Los usuarios se cargarán aquí dinámicamente -->
