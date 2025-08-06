@@ -119,6 +119,14 @@
                                     <label for="dish-price">Precio:</label>
                                     <input type="text" id="dish-price" placeholder="Ej: $15.50">
                                 </div>
+                                <div class="form-group">
+                                    <label for="dish-image">URL de la imagen (opcional):</label>
+                                    <input type="url" id="dish-image" placeholder="https://ejemplo.com/imagen.jpg">
+                                    <div class="image-preview" id="dish-image-preview" style="display: none;">
+                                        <img id="preview-dish-img" src="" alt="Vista previa" style="max-width: 200px; max-height: 150px; border-radius: 8px; margin-top: 10px;">
+                                        <button type="button" class="btn-small btn-delete" onclick="removeDishImage()" title="Quitar imagen" style="margin-left: 10px;">Quitar</button>
+                                    </div>
+                                </div>
                                 <button type="button" class="btn-add" onclick="addDish()">Agregar</button>
                                 <button type="button" class="btn-secondary" onclick="cancelEditDish()">Cancelar</button>
                             </div>

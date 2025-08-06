@@ -5,6 +5,30 @@ document.addEventListener('DOMContentLoaded', function() {
     setupAdminForms();
     loadMenuCategories();
     loadCategorySelector();
+    
+    // Configurar vista previa de imagen para platillos
+    const dishImageInput = document.getElementById('dish-image');
+    if (dishImageInput) {
+        dishImageInput.addEventListener('input', async function() {
+            const url = this.value.trim();
+            
+            if (url) {
+                try {
+                    const isValid = await validateImageUrl(url);
+                    if (isValid) {
+                        showImagePreview(url);
+                    } else {
+                        hideImagePreview();
+                        showAdminMessage('URL de imagen no válida o no accesible', 'error');
+                    }
+                } catch (error) {
+                    hideImagePreview();
+                }
+            } else {
+                hideImagePreview();
+            }
+        });
+    }
 });
 
 // Cargar datos actuales en el panel de admin
@@ -172,34 +196,40 @@ function getMenuData() {
             {
                 "name": "Bruschetta Mediterránea",
                 "description": "Pan tostado con tomate, albahaca y mozzarella fresca",
-                "price": "$8.50"
+                "price": "$8.50",
+                "image": "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=300&h=200&fit=crop"
             },
             {
                 "name": "Carpaccio de Res",
                 "description": "Finas láminas de res con rúcula y parmesano",
-                "price": "$12.75"
+                "price": "$12.75",
+                "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&h=200&fit=crop"
             },
             {
                 "name": "Ceviche de Camarones",
                 "description": "Camarones frescos marinados en limón con cilantro",
-                "price": "$14.25"
+                "price": "$14.25",
+                "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=200&fit=crop"
             }
         ],
         "Platos Principales": [
             {
                 "name": "Filete de Res a la Parrilla",
                 "description": "Acompañado de papas asadas y vegetales de temporada",
-                "price": "$28.90"
+                "price": "$28.90",
+                "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&h=200&fit=crop"
             },
             {
                 "name": "Salmón en Costra de Hierbas",
                 "description": "Con puré de coliflor y salsa de mantequilla al limón",
-                "price": "$24.50"
+                "price": "$24.50",
+                "image": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=300&h=200&fit=crop"
             },
             {
                 "name": "Paella Valenciana",
                 "description": "Arroz con mariscos, pollo y azafrán (para 2 personas)",
-                "price": "$35.00"
+                "price": "$35.00",
+                "image": "https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=300&h=200&fit=crop"
             },
             {
                 "name": "Lasaña de la Casa",
@@ -382,8 +412,12 @@ function loadDishesForCategory() {
         dishesList.innerHTML = '<div class="no-dishes"><p>No hay platillos en esta categoría. ¡Agrega el primero!</p></div>';
     } else {
         dishesList.innerHTML = dishes.map((dish, index) => `
-            <div class="dish-item">
-                <div class="dish-header">
+            <div class="dish-item-admin">
+                <div class="dish-header-admin">
+                    ${dish.image ? 
+                        `<img src="${dish.image}" alt="${dish.name}" class="dish-image-admin">` :
+                        `<div class="dish-image-placeholder">Sin imagen</div>`
+                    }
                     <div class="dish-info">
                         <h4>${dish.name}</h4>
                         <p>${dish.description}</p>
@@ -420,6 +454,7 @@ function addDish() {
     const dishName = document.getElementById('dish-name').value.trim();
     const dishDescription = document.getElementById('dish-description').value.trim();
     const dishPrice = document.getElementById('dish-price').value.trim();
+    const dishImage = document.getElementById('dish-image').value.trim();
     
     if (!selectedCategory) {
         showAdminMessage('Selecciona una categoría primero', 'error');
@@ -427,7 +462,7 @@ function addDish() {
     }
     
     if (!dishName || !dishDescription || !dishPrice) {
-        showAdminMessage('Por favor completa todos los campos', 'error');
+        showAdminMessage('Por favor completa todos los campos obligatorios', 'error');
         return;
     }
     
@@ -438,6 +473,11 @@ function addDish() {
         description: dishDescription,
         price: dishPrice
     };
+    
+    // Agregar imagen solo si se proporcionó una URL
+    if (dishImage) {
+        newDish.image = dishImage;
+    }
     
     if (currentEditingDish !== null) {
         // Editando platillo existente
@@ -472,6 +512,14 @@ function editDish(index) {
     document.getElementById('dish-name').value = dish.name;
     document.getElementById('dish-description').value = dish.description;
     document.getElementById('dish-price').value = dish.price;
+    document.getElementById('dish-image').value = dish.image || '';
+    
+    // Mostrar vista previa de imagen si existe
+    if (dish.image) {
+        showImagePreview(dish.image);
+    } else {
+        hideImagePreview();
+    }
     
     currentEditingDish = index;
     
@@ -521,10 +569,35 @@ function clearDishForm() {
     document.getElementById('dish-name').value = '';
     document.getElementById('dish-description').value = '';
     document.getElementById('dish-price').value = '';
+    document.getElementById('dish-image').value = '';
+    hideImagePreview();
     
     const addButton = document.querySelector('#add-dish-form .btn-add, #add-dish-form .btn-secondary');
     addButton.textContent = 'Agregar';
     addButton.className = 'btn-add';
     
     currentEditingDish = null;
+}
+
+// ========== GESTIÓN DE IMÁGENES ==========
+
+// Mostrar vista previa de imagen
+function showImagePreview(imageUrl) {
+    const previewContainer = document.getElementById('dish-image-preview');
+    const previewImg = document.getElementById('preview-dish-img');
+    
+    previewImg.src = imageUrl;
+    previewContainer.style.display = 'flex';
+}
+
+// Ocultar vista previa de imagen
+function hideImagePreview() {
+    const previewContainer = document.getElementById('dish-image-preview');
+    previewContainer.style.display = 'none';
+}
+
+// Quitar imagen del platillo
+function removeDishImage() {
+    document.getElementById('dish-image').value = '';
+    hideImagePreview();
 }

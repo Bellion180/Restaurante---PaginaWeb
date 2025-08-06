@@ -55,15 +55,30 @@
                 <div class="menu-category">
                     <h2>${categoryName}</h2>
                     <div class="menu-items">
-                        ${dishes.map(dish => `
-                            <div class="menu-item">
-                                <div class="item-info">
-                                    <h3>${dish.name}</h3>
-                                    <p>${dish.description}</p>
-                                </div>
-                                <span class="price">${dish.price}</span>
-                            </div>
-                        `).join('')}
+                        ${dishes.map(dish => {
+                            if (dish.image) {
+                                return `
+                                    <div class="menu-item-with-image">
+                                        <img src="${dish.image}" alt="${dish.name}" class="menu-item-image" onerror="this.style.display='none'">
+                                        <div class="item-info">
+                                            <h3>${dish.name}</h3>
+                                            <p>${dish.description}</p>
+                                        </div>
+                                        <span class="price">${dish.price}</span>
+                                    </div>
+                                `;
+                            } else {
+                                return `
+                                    <div class="menu-item-without-image">
+                                        <div class="item-info">
+                                            <h3>${dish.name}</h3>
+                                            <p>${dish.description}</p>
+                                        </div>
+                                        <span class="price">${dish.price}</span>
+                                    </div>
+                                `;
+                            }
+                        }).join('')}
                     </div>
                 </div>
             `).join('');
@@ -76,34 +91,40 @@
                     {
                         "name": "Bruschetta Mediterránea",
                         "description": "Pan tostado con tomate, albahaca y mozzarella fresca",
-                        "price": "$8.50"
+                        "price": "$8.50",
+                        "image": "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=300&h=200&fit=crop"
                     },
                     {
                         "name": "Carpaccio de Res",
                         "description": "Finas láminas de res con rúcula y parmesano",
-                        "price": "$12.75"
+                        "price": "$12.75",
+                        "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&h=200&fit=crop"
                     },
                     {
                         "name": "Ceviche de Camarones",
                         "description": "Camarones frescos marinados en limón con cilantro",
-                        "price": "$14.25"
+                        "price": "$14.25",
+                        "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=300&h=200&fit=crop"
                     }
                 ],
                 "Platos Principales": [
                     {
                         "name": "Filete de Res a la Parrilla",
                         "description": "Acompañado de papas asadas y vegetales de temporada",
-                        "price": "$28.90"
+                        "price": "$28.90",
+                        "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=300&h=200&fit=crop"
                     },
                     {
                         "name": "Salmón en Costra de Hierbas",
                         "description": "Con puré de coliflor y salsa de mantequilla al limón",
-                        "price": "$24.50"
+                        "price": "$24.50",
+                        "image": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=300&h=200&fit=crop"
                     },
                     {
                         "name": "Paella Valenciana",
                         "description": "Arroz con mariscos, pollo y azafrán (para 2 personas)",
-                        "price": "$35.00"
+                        "price": "$35.00",
+                        "image": "https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=300&h=200&fit=crop"
                     },
                     {
                         "name": "Lasaña de la Casa",
