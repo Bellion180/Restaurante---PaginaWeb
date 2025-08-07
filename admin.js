@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupAdminForms();
     loadMenuCategories();
     loadCategorySelector();
+    setupColorCustomization(); // Agregar inicialización de colores
     
     // Configurar vista previa de imagen para platillos
     const dishImageInput = document.getElementById('dish-image');
@@ -687,3 +688,414 @@ function removeDishImage() {
     document.getElementById('dish-image').value = '';
     hideImagePreview();
 }
+
+// ========== PERSONALIZACIÓN DE COLORES ==========
+
+function setupColorCustomization() {
+    // Cargar colores guardados
+    loadSavedColors();
+    
+    // Configurar eventos para los inputs de color
+    const colorInputs = [
+        { color: 'primary-color', text: 'primary-color-text' },
+        { color: 'secondary-color', text: 'secondary-color-text' },
+        { color: 'text-color', text: 'text-color-text' },
+        { color: 'background-color', text: 'background-color-text' }
+    ];
+    
+    colorInputs.forEach(input => {
+        const colorInput = document.getElementById(input.color);
+        const textInput = document.getElementById(input.text);
+        
+        if (colorInput && textInput) {
+            // Sincronizar color picker con input de texto
+            colorInput.addEventListener('input', function() {
+                textInput.value = this.value.toLowerCase();
+                updateColorPreview();
+            });
+            
+            // Sincronizar input de texto con color picker
+            textInput.addEventListener('input', function() {
+                const value = this.value.trim();
+                if (isValidHexColor(value)) {
+                    colorInput.value = value;
+                    updateColorPreview();
+                } else if (value === '') {
+                    // Permitir campo vacío temporalmente
+                } else {
+                    // Marcar como inválido visualmente
+                    this.style.borderColor = '#e74c3c';
+                    return;
+                }
+                this.style.borderColor = '#ddd';
+            });
+            
+            textInput.addEventListener('blur', function() {
+                const value = this.value.trim();
+                if (!isValidHexColor(value) && value !== '') {
+                    // Restaurar valor del color picker si el hex es inválido
+                    this.value = colorInput.value;
+                    this.style.borderColor = '#ddd';
+                }
+            });
+        }
+    });
+    
+    // Configurar formulario de colores
+    const colorForm = document.getElementById('color-customization-form');
+    if (colorForm) {
+        colorForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            applyCustomColors();
+        });
+    }
+    
+    // Actualizar vista previa inicial
+    updateColorPreview();
+}
+
+function isValidHexColor(hex) {
+    const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+    return hexRegex.test(hex);
+}
+
+function loadSavedColors() {
+    const savedColors = JSON.parse(localStorage.getItem('customColors')) || {
+        primary: '#d4a574',
+        secondary: '#b8956a',
+        text: '#333333',
+        background: '#fafafa'
+    };
+    
+    // Establecer valores en los inputs
+    document.getElementById('primary-color').value = savedColors.primary;
+    document.getElementById('primary-color-text').value = savedColors.primary;
+    document.getElementById('secondary-color').value = savedColors.secondary;
+    document.getElementById('secondary-color-text').value = savedColors.secondary;
+    document.getElementById('text-color').value = savedColors.text;
+    document.getElementById('text-color-text').value = savedColors.text;
+    document.getElementById('background-color').value = savedColors.background;
+    document.getElementById('background-color-text').value = savedColors.background;
+}
+
+function updateColorPreview() {
+    const colors = getCurrentColors();
+    
+    // Actualizar vista previa
+    const previewHeader = document.getElementById('color-preview-header');
+    const previewLogo = document.getElementById('color-preview-logo');
+    const previewLink = document.getElementById('color-preview-link');
+    const previewContent = document.getElementById('color-preview-content');
+    const previewTitle = document.getElementById('color-preview-title');
+    const previewText = document.getElementById('color-preview-text');
+    const previewButton = document.getElementById('color-preview-button');
+    
+    if (previewHeader) {
+        previewHeader.style.background = `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)`;
+    }
+    
+    if (previewLogo) {
+        previewLogo.style.color = 'white';
+    }
+    
+    if (previewLink) {
+        previewLink.style.color = 'white';
+    }
+    
+    if (previewContent) {
+        previewContent.style.backgroundColor = colors.background;
+    }
+    
+    if (previewTitle) {
+        previewTitle.style.color = colors.text;
+    }
+    
+    if (previewText) {
+        previewText.style.color = colors.text;
+    }
+    
+    if (previewButton) {
+        previewButton.style.background = `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)`;
+        previewButton.style.color = 'white';
+    }
+}
+
+function getCurrentColors() {
+    return {
+        primary: document.getElementById('primary-color').value,
+        secondary: document.getElementById('secondary-color').value,
+        text: document.getElementById('text-color').value,
+        background: document.getElementById('background-color').value
+    };
+}
+
+function applyCustomColors() {
+    const colors = getCurrentColors();
+    
+    // Guardar colores en localStorage
+    localStorage.setItem('customColors', JSON.stringify(colors));
+    
+    // Aplicar colores a la página actual
+    applyColorsToPage(colors);
+    
+    // Mostrar mensaje de éxito
+    showAdminMessage('Colores aplicados correctamente. Los cambios se reflejarán en toda la página web.', 'success');
+}
+
+function applyColorsToPage(colors) {
+    // Crear o actualizar hoja de estilos dinámica
+    let dynamicStyles = document.getElementById('dynamic-colors');
+    if (!dynamicStyles) {
+        dynamicStyles = document.createElement('style');
+        dynamicStyles.id = 'dynamic-colors';
+        document.head.appendChild(dynamicStyles);
+    }
+    
+    const css = `
+        /* Colores personalizados dinámicos */
+        body {
+            background-color: ${colors.background} !important;
+            color: ${colors.text} !important;
+        }
+        
+        .restaurant-name {
+            color: ${colors.primary} !important;
+        }
+        
+        .nav-list a:hover {
+            color: ${colors.primary} !important;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%) !important;
+        }
+        
+        .dish-card {
+            color: ${colors.text} !important;
+        }
+        
+        .dish-card h3 {
+            color: ${colors.text} !important;
+        }
+        
+        .daily-dishes h2, .daily-offers h2, .about h2 {
+            color: ${colors.text} !important;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%) !important;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, ${colors.secondary} 0%, ${colors.primary} 100%) !important;
+        }
+        
+        .price {
+            color: ${colors.primary} !important;
+        }
+        
+        /* Flechas del carrusel */
+        .carousel-btn {
+            background: rgba(${hexToRgb(colors.primary)}, 0.9) !important;
+        }
+        
+        .carousel-btn:hover {
+            background: rgba(${hexToRgb(colors.primary)}, 1) !important;
+        }
+        
+        /* Títulos principales de páginas */
+        .admin-main h1 {
+            color: ${colors.text} !important;
+        }
+        
+        .menu-main h1 {
+            color: ${colors.text} !important;
+        }
+        
+        .offers-main h1 {
+            color: ${colors.text} !important;
+        }
+        
+        /* Otros títulos y elementos */
+        .menu-category h2 {
+            color: ${colors.text} !important;
+        }
+        
+        .item-info h3 {
+            color: ${colors.text} !important;
+        }
+        
+        .offer-card-large h2 {
+            color: ${colors.text} !important;
+        }
+        
+        .special-events h2 {
+            color: ${colors.text} !important;
+        }
+        
+        .event-card h3 {
+            color: ${colors.text} !important;
+        }
+        
+        .menu-categories-section h3, .menu-items-section h3 {
+            color: ${colors.text} !important;
+        }
+        
+        .add-dish-form h4 {
+            color: ${colors.text} !important;
+        }
+        
+        .admin-section h2 {
+            color: ${colors.text} !important;
+            border-bottom-color: ${colors.primary} !important;
+        }
+        
+        .form-group label {
+            color: ${colors.text} !important;
+        }
+        
+        .color-section h3 {
+            color: ${colors.text} !important;
+            border-bottom-color: ${colors.primary} !important;
+        }
+        
+        .preview-content h4 {
+            color: ${colors.text} !important;
+        }
+        
+        .preview-content p {
+            color: ${colors.text} !important;
+        }
+        
+        .auth-form h2 {
+            color: ${colors.text} !important;
+        }
+        
+        .menu-item h3 {
+            color: ${colors.text} !important;
+        }
+        
+        .menu-item .price {
+            color: ${colors.primary} !important;
+        }
+        
+        .offer-card h3 {
+            color: ${colors.text} !important;
+        }
+        
+        .offer-card .original-price {
+            color: #999 !important;
+        }
+        
+        .offer-card .discounted-price {
+            color: ${colors.primary} !important;
+        }
+        
+        /* Sección "Sobre Nosotros" */
+        .info-item strong {
+            color: ${colors.primary} !important;
+        }
+        
+        .info-item p {
+            color: ${colors.text} !important;
+        }
+        
+        /* Ofertas especiales - página de ofertas */
+        .offers-subtitle {
+            color: ${colors.text} !important;
+        }
+        
+        .offer-card-large > p {
+            color: ${colors.text} !important;
+        }
+        
+        .offer-details li {
+            color: ${colors.text} !important;
+        }
+        
+        .offer-details li:before {
+            color: ${colors.primary} !important;
+        }
+        
+        .offer-validity {
+            color: ${colors.text} !important;
+            opacity: 0.7;
+        }
+        
+        .offer-badge {
+            background: ${colors.primary} !important;
+        }
+        
+        .old-price {
+            color: #999 !important;
+        }
+        
+        .new-price {
+            color: ${colors.primary} !important;
+        }
+        
+        .event-time {
+            color: ${colors.primary} !important;
+        }
+        
+        .footer {
+            color: ${colors.text} !important;
+        }
+        
+        .message.success {
+            background-color: rgba(46, 125, 50, 0.1) !important;
+            border-color: #2e7d32 !important;
+            color: #2e7d32 !important;
+        }
+        
+        .message.error {
+            background-color: rgba(231, 76, 60, 0.1) !important;
+            border-color: #e74c3c !important;
+            color: #e74c3c !important;
+        }
+    `;
+    
+    dynamicStyles.innerHTML = css;
+}
+
+function resetColors() {
+    // Restaurar colores por defecto
+    const defaultColors = {
+        primary: '#d4a574',
+        secondary: '#b8956a',
+        text: '#333333',
+        background: '#fafafa'
+    };
+    
+    // Actualizar inputs
+    document.getElementById('primary-color').value = defaultColors.primary;
+    document.getElementById('primary-color-text').value = defaultColors.primary;
+    document.getElementById('secondary-color').value = defaultColors.secondary;
+    document.getElementById('secondary-color-text').value = defaultColors.secondary;
+    document.getElementById('text-color').value = defaultColors.text;
+    document.getElementById('text-color-text').value = defaultColors.text;
+    document.getElementById('background-color').value = defaultColors.background;
+    document.getElementById('background-color-text').value = defaultColors.background;
+    
+    // Aplicar colores
+    applyCustomColors();
+    
+    showAdminMessage('Colores restaurados a los valores por defecto.', 'success');
+}
+
+// Función auxiliar para convertir hex a RGB
+function hexToRgb(hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? 
+        `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : 
+        '212, 165, 116'; // Valor por defecto
+}
+
+// Aplicar colores guardados al cargar cualquier página
+document.addEventListener('DOMContentLoaded', function() {
+    const savedColors = localStorage.getItem('customColors');
+    if (savedColors) {
+        const colors = JSON.parse(savedColors);
+        applyColorsToPage(colors);
+    }
+});

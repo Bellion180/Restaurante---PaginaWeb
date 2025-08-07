@@ -147,6 +147,73 @@
                 </div>
 
                 <div class="admin-section">
+                    <h2>Personalización de Colores</h2>
+                    <form id="color-customization-form">
+                        <div class="color-section">
+                            <h3>Colores Principales</h3>
+                            <div class="color-row">
+                                <div class="form-group">
+                                    <label for="primary-color">Color Primario:</label>
+                                    <div class="color-input-group">
+                                        <input type="color" id="primary-color" name="primary-color" value="#d4a574">
+                                        <input type="text" id="primary-color-text" value="#d4a574" placeholder="#d4a574">
+                                    </div>
+                                    <small>Color principal del sitio (logo, botones, enlaces)</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="secondary-color">Color Secundario:</label>
+                                    <div class="color-input-group">
+                                        <input type="color" id="secondary-color" name="secondary-color" value="#b8956a">
+                                        <input type="text" id="secondary-color-text" value="#b8956a" placeholder="#b8956a">
+                                    </div>
+                                    <small>Color secundario (gradientes, acentos)</small>
+                                </div>
+                            </div>
+                            <div class="color-row">
+                                <div class="form-group">
+                                    <label for="text-color">Color del Texto:</label>
+                                    <div class="color-input-group">
+                                        <input type="color" id="text-color" name="text-color" value="#333333">
+                                        <input type="text" id="text-color-text" value="#333333" placeholder="#333333">
+                                    </div>
+                                    <small>Color principal del texto</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="background-color">Color de Fondo:</label>
+                                    <div class="color-input-group">
+                                        <input type="color" id="background-color" name="background-color" value="#fafafa">
+                                        <input type="text" id="background-color-text" value="#fafafa" placeholder="#fafafa">
+                                    </div>
+                                    <small>Color de fondo de la página</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="color-preview">
+                            <h3>Vista Previa de Colores</h3>
+                            <div class="preview-card">
+                                <div class="preview-header" id="color-preview-header">
+                                    <span class="preview-logo" id="color-preview-logo">🍽️ Sabores del Valle</span>
+                                    <nav class="preview-nav">
+                                        <a href="#" class="preview-link" id="color-preview-link">Menú</a>
+                                    </nav>
+                                </div>
+                                <div class="preview-content" id="color-preview-content">
+                                    <h4 id="color-preview-title">Título de Ejemplo</h4>
+                                    <p id="color-preview-text">Este es un ejemplo de cómo se verá el texto con los colores seleccionados.</p>
+                                    <button class="preview-button" id="color-preview-button">Botón de Ejemplo</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="color-actions">
+                            <button type="submit" class="btn-primary">Aplicar Colores</button>
+                            <button type="button" class="btn-secondary" onclick="resetColors()">Restaurar Colores por Defecto</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="admin-section">
                     <h2>Usuarios Registrados</h2>
                     <div id="users-list" class="users-list">
                         <!-- Los usuarios se cargarán aquí dinámicamente -->
