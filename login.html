@@ -55,7 +55,7 @@
             const messageDiv = document.getElementById('login-message');
             
             // Verificar credenciales de admin
-            if (email === 'admin@restaurant.com' && password === 'admin123') {
+            if (email === 'admin123@restaurant.com' && password === 'admin123') {
                 localStorage.setItem('isAdmin', 'true');
                 localStorage.setItem('currentUser', email);
                 messageDiv.innerHTML = '<p class="success">¡Bienvenido Administrador!</p>';
