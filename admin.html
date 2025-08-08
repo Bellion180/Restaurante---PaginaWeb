@@ -116,8 +116,8 @@
                                     <textarea id="dish-description" placeholder="Descripción del platillo" rows="2"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="dish-price">Precio:</label>
-                                    <input type="text" id="dish-price" placeholder="Ej: $15.50">
+                                    <label for="dish-price">Precio regular:</label>
+                                    <input type="text" id="dish-price" placeholder="Ej: $20.50">
                                 </div>
                                 <div class="form-group">
                                     <label for="dish-image">URL de la imagen (opcional):</label>
@@ -126,6 +126,18 @@
                                         <img id="preview-dish-img" src="" alt="Vista previa" style="max-width: 200px; max-height: 150px; border-radius: 8px; margin-top: 10px;">
                                         <button type="button" class="btn-small btn-delete" onclick="removeDishImage()" title="Quitar imagen" style="margin-left: 10px;">Quitar</button>
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <input type="checkbox" id="dish-offer" name="dish-offer">
+                                        Agregar a ofertas
+                                    </label>
+                                </div>
+                                <div class="form-group offer-details" id="offer-details" style="display: none;">
+                                    <label for="dish-original-price">Precio con descuento:</label>
+                                    <input type="text" id="dish-original-price" placeholder="Ej: $15.50">
+                                    <label for="dish-offer-end">Fecha fin de oferta:</label>
+                                    <input type="date" id="dish-offer-end">
                                 </div>
                                 <button type="button" class="btn-add" onclick="addDish()">Agregar</button>
                                 <button type="button" class="btn-secondary" onclick="cancelEditDish()">Cancelar</button>

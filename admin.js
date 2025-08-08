@@ -30,6 +30,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Configurar checkbox de oferta
+    const offerCheckbox = document.getElementById('dish-offer');
+    const offerDetails = document.getElementById('offer-details');
+    
+    if (offerCheckbox) {
+        offerCheckbox.addEventListener('change', function() {
+            offerDetails.style.display = this.checked ? 'block' : 'none';
+        });
+    }
 });
 
 // Cargar datos actuales en el panel de admin
@@ -413,7 +423,7 @@ function loadDishesForCategory() {
         dishesList.innerHTML = '<div class="no-dishes"><p>No hay platillos en esta categoría. ¡Agrega el primero!</p></div>';
     } else {
         dishesList.innerHTML = dishes.map((dish, index) => `
-            <div class="dish-item-admin">
+            <div class="dish-item-admin ${dish.isOffer ? 'dish-with-offer' : ''}">
                 <div class="dish-header-admin">
                     ${dish.image ? 
                         `<img src="${dish.image}" alt="${dish.name}" class="dish-image-admin">` :
@@ -422,10 +432,21 @@ function loadDishesForCategory() {
                     <div class="dish-info">
                         <h4>${dish.name}</h4>
                         <p>${dish.description}</p>
-                        <span class="dish-price">${dish.price}</span>
+                        <div class="dish-price-info">
+                            <span class="dish-regular-price">Precio regular: ${dish.isOffer ? dish.originalPrice : dish.price}</span>
+                            ${dish.isOffer ? `
+                                <div class="offer-info">
+                                    <span class="discount-price">Precio con descuento: ${dish.price}</span>
+                                    <span class="offer-end">Hasta: ${new Date(dish.offerEnd).toLocaleDateString()}</span>
+                                </div>
+                            ` : ''}
+                        </div>
                     </div>
                     <div class="dish-actions">
                         <button class="btn-small btn-edit" onclick="editDish(${index})" title="Editar platillo"></button>
+                        ${dish.isOffer ? 
+                            `<button class="btn-small btn-remove-offer" onclick="removeOffer(${index})" title="Quitar oferta">Quitar oferta</button>` : ''
+                        }
                         <button class="btn-small btn-delete" onclick="deleteDish(${index})" title="Eliminar platillo"></button>
                     </div>
                 </div>
@@ -454,16 +475,24 @@ function addDish() {
     const selectedCategory = document.getElementById('selected-category').value;
     const dishName = document.getElementById('dish-name').value.trim();
     const dishDescription = document.getElementById('dish-description').value.trim();
-    const dishPrice = document.getElementById('dish-price').value.trim();
+    const regularPrice = document.getElementById('dish-price').value.trim();
     const dishImage = document.getElementById('dish-image').value.trim();
+    const isOffer = document.getElementById('dish-offer').checked;
+    const discountedPrice = document.getElementById('dish-original-price').value.trim();
+    const offerEnd = document.getElementById('dish-offer-end').value;
     
     if (!selectedCategory) {
         showAdminMessage('Selecciona una categoría primero', 'error');
         return;
     }
     
-    if (!dishName || !dishDescription || !dishPrice) {
+    if (!dishName || !dishDescription || !regularPrice) {
         showAdminMessage('Por favor completa todos los campos obligatorios', 'error');
+        return;
+    }
+
+    if (isOffer && (!discountedPrice || !offerEnd)) {
+        showAdminMessage('Por favor completa los detalles de la oferta', 'error');
         return;
     }
     
@@ -472,12 +501,19 @@ function addDish() {
     const newDish = {
         name: dishName,
         description: dishDescription,
-        price: dishPrice
+        price: isOffer ? discountedPrice : regularPrice,
+        isOffer: isOffer
     };
     
     // Agregar imagen solo si se proporcionó una URL
     if (dishImage) {
         newDish.image = dishImage;
+    }
+
+    // Agregar detalles de oferta si está marcado como oferta
+    if (isOffer) {
+        newDish.originalPrice = regularPrice;
+        newDish.offerEnd = offerEnd;
     }
     
     if (currentEditingDish !== null) {
@@ -514,6 +550,25 @@ function editDish(index) {
     document.getElementById('dish-description').value = dish.description;
     document.getElementById('dish-price').value = dish.price;
     document.getElementById('dish-image').value = dish.image || '';
+    
+    // Llenar datos de oferta si existen
+    const offerCheckbox = document.getElementById('dish-offer');
+    const offerDetails = document.getElementById('offer-details');
+    
+    if (dish.isOffer) {
+        offerCheckbox.checked = true;
+        offerDetails.style.display = 'block';
+        // Invertimos los precios: el precio regular es el precio original y el precio con descuento es el actual
+        document.getElementById('dish-price').value = dish.originalPrice;
+        document.getElementById('dish-original-price').value = dish.price;
+        document.getElementById('dish-offer-end').value = dish.offerEnd;
+    } else {
+        offerCheckbox.checked = false;
+        offerDetails.style.display = 'none';
+        document.getElementById('dish-price').value = dish.price;
+        document.getElementById('dish-original-price').value = '';
+        document.getElementById('dish-offer-end').value = '';
+    }
     
     // Mostrar vista previa de imagen si existe
     if (dish.image) {
@@ -556,6 +611,28 @@ function cancelEditDish() {
     currentEditingDish = null;
 }
 
+// Quitar oferta de un platillo
+function removeOffer(index) {
+    const selectedCategory = document.getElementById('selected-category').value;
+    const menuData = getMenuData();
+    const dish = menuData[selectedCategory][index];
+    
+    if (!confirm(`¿Estás seguro de que quieres quitar la oferta de "${dish.name}"?`)) {
+        return;
+    }
+    
+    // Eliminar propiedades de oferta
+    delete dish.isOffer;
+    delete dish.originalPrice;
+    delete dish.offerEnd;
+    
+    // Actualizar en el menú
+    menuData[selectedCategory][index] = dish;
+    saveMenuData(menuData);
+    loadDishesForCategory();
+    showAdminMessage('Oferta eliminada exitosamente', 'success');
+}
+
 // Ocultar formulario de agregar platillo
 function hideAddDishForm() {
     const addDishForm = document.getElementById('add-dish-form');
@@ -571,6 +648,15 @@ function clearDishForm() {
     document.getElementById('dish-description').value = '';
     document.getElementById('dish-price').value = '';
     document.getElementById('dish-image').value = '';
+    
+    // Limpiar campos de oferta
+    const offerCheckbox = document.getElementById('dish-offer');
+    const offerDetails = document.getElementById('offer-details');
+    offerCheckbox.checked = false;
+    offerDetails.style.display = 'none';
+    document.getElementById('dish-original-price').value = '';
+    document.getElementById('dish-offer-end').value = '';
+    
     hideImagePreview();
     
     const addButton = document.querySelector('#add-dish-form .btn-add, #add-dish-form .btn-secondary');
